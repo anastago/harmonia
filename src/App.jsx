@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
 import Homepage from "./pages/Homepage"
@@ -11,7 +11,7 @@ function App() {
     document.body.classList.add("box-border")
   }, [])
   return (
-    <Router>
+    <>
       <Helmet>
         <title>HarmonIA</title>
       </Helmet>
@@ -21,7 +21,7 @@ function App() {
           <Route path="/journal" element={<Journal />} />
         </Routes>
       </div>
-    </Router>
+    </>
   )
 }
 
