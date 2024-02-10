@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
+import Homepage from "./pages/Homepage"
+import Journal from "./pages/Journal"
 
 function App() {
   useEffect(() => {
@@ -9,16 +11,17 @@ function App() {
     document.body.classList.add("box-border")
   }, [])
   return (
-    <div className="min-w-[320px]">
+    <Router>
       <Helmet>
         <title>HarmonIA</title>
       </Helmet>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/journal" element={<Journal />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </div>
+      <div className="min-w-[320px]">
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/journal" element={<Journal />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
