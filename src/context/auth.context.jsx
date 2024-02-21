@@ -8,8 +8,8 @@ function AuthProviderWrapper(props) {
   const [user, setUser] = useState({})
   const [notes, setNotes] = useState([])
   const [ownerNotes, setOwnerNotes] = useState([])
-
-  const API_URL = process.env.API_URL
+  const API_URL = import.meta.env.VITE_API_URL
+  console.log(API_URL)
 
   const login = async (event, email, password) => {
     event.preventDefault()
@@ -70,21 +70,21 @@ function AuthProviderWrapper(props) {
         console.log(err)
       })
   }
-}
-const getNotes = (userToken) => {
-  axios
-    .get(`${API_URL}/api/notes`, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    })
-    .then((response) => {
-      setNotes(response.data.notes)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
 
+  const getNotes = (userToken) => {
+    axios
+      .get(`${API_URL}/api/notes`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => {
+        setNotes(response.data.notes)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   const getOwnerNotes = (userToken) => {
     axios
       .get(`${API_URL}/api/articles/owner`, {
@@ -144,5 +144,4 @@ const getNotes = (userToken) => {
     </AuthContext.Provider>
   )
 }
-
 export { AuthContext, AuthProviderWrapper }
