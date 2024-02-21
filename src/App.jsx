@@ -4,6 +4,8 @@ import { useEffect } from "react"
 import { Helmet } from "react-helmet"
 import Homepage from "./pages/Homepage"
 import Journal from "./pages/Journal"
+import Login from "./pages/Login"
+import Signup from "./pages/Signup"
 
 function App() {
   useEffect(() => {
@@ -19,6 +21,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/signup" element={<Login />} />
+          <Route path="/login" element={<Signup />} />
         </Routes>
       </div>
     </>
