@@ -15,14 +15,14 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>HarmonIA</title>
+        <title>Harmonai</title>
       </Helmet>
       <div className="min-w-[320px]">
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/journal" element={<Journal />} />
-          <Route path="/signup" element={<Login />} />
-          <Route path="/login" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </>

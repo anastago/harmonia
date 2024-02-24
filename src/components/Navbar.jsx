@@ -8,14 +8,14 @@ function Navbar() {
         to="/"
         className="w-36 h-12 rounded-full p-3 text-center drop-shadow-l text-sky-500 flex items-center gap-1"
       >
-        HarmonIA
+        Harmonia
       </Link>
 
       <Link
-        to="/about"
+        to="/login"
         className="w-36 h-12 rounded-full p-3 text-center drop-shadow-lg hover:bg-blue-100 flex items-center justify-center"
       >
-        About
+        Log in
       </Link>
     </div>
   )

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useEffect } from "react"
 import axios from "axios"
 
 const AuthContext = createContext()
@@ -8,6 +8,7 @@ function AuthProviderWrapper(props) {
   const [user, setUser] = useState({})
   const [notes, setNotes] = useState([])
   const [ownerNotes, setOwnerNotes] = useState([])
+  const [aiResponse, setAIResponse] = useState([])
   const API_URL = import.meta.env.VITE_API_URL
   console.log(API_URL)
 
@@ -37,6 +38,7 @@ function AuthProviderWrapper(props) {
 
   const signup = (event, email, password) => {
     event.preventDefault()
+    console.log(email, password)
     axios
       .post(`${API_URL}/api/users`, { email: email, password: password })
       .then(() => {
@@ -85,6 +87,36 @@ function AuthProviderWrapper(props) {
         console.log(err)
       })
   }
+
+  const getNote = (userToken) => {
+    axios
+      .get(`${API_URL}/api/notes/:noteId`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => {
+        setNotes(response.data.notes)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const getAIResponse = (userToken) => {
+    axios
+      .get(`${API_URL}/api/airesponses/single`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => {
+        setAIResponse(response.data.notes.airesponse)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   const getOwnerNotes = (userToken) => {
     axios
       .get(`${API_URL}/api/articles/owner`, {
