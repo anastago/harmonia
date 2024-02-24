@@ -5,25 +5,23 @@ import { AuthContext } from "../context/auth.context"
 
 import React from "react"
 
-
-
 function Login(props) {
-    const { value, login, checkLogin } = useContext(AuthContext)
+  const { value, login, checkLogin } = useContext(AuthContext)
 
-const [email, setEmail] = useState("")
-const [password, setPassword] = useState("")
-const navigate = useNavigate()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
-const handleSubmit = async (event) => {
-  const loginResponse = await login(event, email, password)
-  if (loginResponse === "login ok") {
-    navigate("/journal")
+  const handleSubmit = async (event) => {
+    const loginResponse = await login(event, email, password)
+    if (loginResponse === "login ok") {
+      navigate("/journal")
+    }
   }
-}
 
-useEffect(() => {
-  checkLogin()
-}, [])
+  useEffect(() => {
+    checkLogin()
+  }, [])
 
   return (
     <div>
