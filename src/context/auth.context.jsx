@@ -31,6 +31,7 @@ function AuthProviderWrapper(props) {
 
   const checkLogin = () => {
     const storedToken = localStorage.getItem("authToken")
+    console.log("token", storedToken)
     if (storedToken) {
       setToken(storedToken)
     }
@@ -102,39 +103,45 @@ function AuthProviderWrapper(props) {
         console.log(err)
       })
   }
-  const getAIResponse = (userToken) => {
+  const getAIResponse = (userToken, noteId) => {
     axios
       .get(`${API_URL}/api/airesponses/single`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
+        params: {
+          noteId: noteId,
+        },
       })
       .then((response) => {
-        setAIResponse(response.data.notes.airesponse)
+        setAIResponse(response.data.aiResponse)
       })
       .catch((err) => {
-        console.log(err)
+        console.log("Error fetching AI response:", err)
       })
   }
 
   const getOwnerNotes = (userToken) => {
+    if (!userToken) {
+      return
+    }
     axios
-      .get(`${API_URL}/api/articles/owner`, {
-        /// CETTE ROUTE
+
+      .get(`${API_URL}/api/notes/owner`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((response) => {
-        setOwnerArticles(response.data.articles)
+        console.log(response.data)
+        setOwnerNotes(response.data.notes)
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
-  const postNote = (event, userToken, text) => {
-    event.preventDefault()
+  const postNote = async (userToken, text) => {
     axios
       .post(
         `${API_URL}/api/notes/`,
@@ -146,8 +153,8 @@ function AuthProviderWrapper(props) {
         }
       )
       .then((response) => {
-        console.log(response.data.message)
-        return "Note created"
+        console.log(response.data)
+        return response.data
       })
       .catch((error) => {
         console.log(error)
@@ -170,6 +177,7 @@ function AuthProviderWrapper(props) {
         getOwnerNotes,
         ownerNotes,
         postNote,
+        getAIResponse,
       }}
     >
       {props.children}
