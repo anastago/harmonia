@@ -1,10 +1,8 @@
 import React, { useState, useContext } from "react"
 import TextareaAutosize from "react-textarea-autosize"
-
 import { AuthContext } from "../context/auth.context"
 
-function CreateNote(props) {
-  const { postNote, token } = useContext(AuthContext)
+function CreateNote({ onCreateNote }) {
   const [text, setText] = useState("")
 
   const handleInputChange = (e) => {
@@ -12,17 +10,14 @@ function CreateNote(props) {
   }
 
   const handleSubmit = async (event) => {
-    const responsePostNote = await postNote(event, token, text)
-    console.log(responsePostNote)
+    event.preventDefault()
+    await onCreateNote(text)
+    setText("")
   }
 
   return (
     <div>
-      <form
-        onSubmit={(event) => {
-          handleSubmit(event)
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <div>
           <TextareaAutosize
             autoFocus
