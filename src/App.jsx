@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useSearchParams } from "react-router-dom"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
 import Homepage from "./pages/Homepage"
@@ -20,7 +20,7 @@ function App() {
       <div className="min-w-[320px]">
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/journal" element={<Journal />} />
+          <Route path="/notes/:id" element={<Journal />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
         </Routes>
