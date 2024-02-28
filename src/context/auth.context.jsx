@@ -7,6 +7,7 @@ function AuthProviderWrapper(props) {
   const [token, setToken] = useState("")
   const [user, setUser] = useState({})
   const [notes, setNotes] = useState([])
+  const [note, setNote] = useState([])
   const [ownerNotes, setOwnerNotes] = useState([])
   const [aiResponse, setAIResponse] = useState([])
   const API_URL = import.meta.env.VITE_API_URL
@@ -89,20 +90,42 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  const getNote = (userToken) => {
+  const getNote = (userToken, id) => {
     axios
-      .get(`${API_URL}/api/notes/:noteId`, {
+      .get(`${API_URL}/api/notes/${id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((response) => {
-        setNotes(response.data.notes)
+        console.log(response)
+        setNote(response.data.data)
       })
       .catch((err) => {
         console.log(err)
       })
   }
+
+  const updateNote = (userToken, id, newText) => {
+    axios
+      .put(
+        `${API_URL}/api/notes/${id}`,
+        { text: newText },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response)
+        setNote(response.data.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   const getAIResponse = (userToken, noteId) => {
     axios
       .get(`${API_URL}/api/airesponses/single`, {
@@ -114,12 +137,35 @@ function AuthProviderWrapper(props) {
         },
       })
       .then((response) => {
-        setAIResponse(response.data.aiResponse)
+        setAIResponse(response.data.text)
+        console.log(response.data.text)
       })
       .catch((err) => {
         console.log("Error fetching AI response:", err)
       })
   }
+
+  const postAIResponse = (userToken, noteId) => {
+    axios
+      .post(
+        `${API_URL}/api/airesponses/`,
+        { noteId },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        setAIResponse(response.data.data.text)
+        console.log("created AI response", response.data.data.text)
+      })
+      .catch((err) => {
+        console.log("Error fetching AI response:", err)
+      })
+  }
+
+  // ?
 
   const getOwnerNotes = (userToken) => {
     if (!userToken) {
@@ -141,9 +187,29 @@ function AuthProviderWrapper(props) {
       })
   }
 
+  // const postNote = async (userToken, text) => {
+  //   axios
+  //     .post(
+  //       `${API_URL}/api/notes/`,
+  //       { text },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${userToken}`,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       console.log("id of a new note", response.data.data._id)
+  //       return response.data
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }
+
   const postNote = async (userToken, text) => {
-    axios
-      .post(
+    try {
+      const response = await axios.post(
         `${API_URL}/api/notes/`,
         { text },
         {
@@ -152,13 +218,12 @@ function AuthProviderWrapper(props) {
           },
         }
       )
-      .then((response) => {
-        console.log(response.data)
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      console.log("id of a new note", response.data.data._id)
+      return response.data
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
   }
 
   return (
@@ -178,6 +243,11 @@ function AuthProviderWrapper(props) {
         ownerNotes,
         postNote,
         getAIResponse,
+        getNote,
+        note,
+        aiResponse,
+        postAIResponse,
+        updateNote,
       }}
     >
       {props.children}

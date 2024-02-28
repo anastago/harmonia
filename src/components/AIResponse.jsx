@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
 
-function AIResponse({ noteId }) {
-  const { getAIResponse, token } = useContext(AuthContext)
-  const [aiResponse, setAIResponse] = useState(null)
+function AIResponse({ onCreateAIResponse }) {
+  const { getAIResponse, token, aiResponse, note } = useContext(AuthContext)
 
   useEffect(() => {
     const fetchAIResponse = async () => {
-      if (token && noteId) {
+      if (token && note._id) {
         try {
-          const response = await getAIResponse(token, noteId)
-          setAIResponse(response)
+          await getAIResponse(token, note._id)
         } catch (error) {
           console.log("Error fetching AI response:", error)
         }
@@ -18,17 +16,21 @@ function AIResponse({ noteId }) {
     }
 
     fetchAIResponse()
-  }, [token, noteId])
+  }, [token, note._id])
+
+  const handleAIResponse = async (event) => {
+    event.preventDefault()
+    await onCreateAIResponse(note._id)
+  }
 
   return (
     <div>
-      {aiResponse ? (
-        <div>
-          <p>{aiResponse.text}</p>
-        </div>
-      ) : (
-        <p>No AI response found.</p>
-      )}
+      <div className="border h-14 text-black">
+        <form onSubmit={handleAIResponse}>
+          <button type="submit">Get AI Response</button>
+        </form>
+        {aiResponse}
+      </div>
     </div>
   )
 }

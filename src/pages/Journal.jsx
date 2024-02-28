@@ -3,28 +3,57 @@ import { AuthContext } from "../context/auth.context"
 import CreateNote from "../components/CreateNote"
 import History from "../components/History"
 import AIResponse from "../components/AIResponse"
+import { useParams, useNavigate } from "react-router-dom"
 
-function Journal() {
+function Journal(props) {
   const {
     token,
     checkLogin,
-    getAIResponse,
     getOwnerNotes,
     postNote,
     ownerNotes,
+    getNote,
+    note,
+    postAIResponse,
+    aiResponseNew,
+    setNote,
   } = useContext(AuthContext)
+
   const [currentNote, setCurrentNote] = useState(null)
-  const [aiResponseText, setAIResponseText] = useState("")
+  const { id } = useParams()
+  const navigate = useNavigate()
+  console.log("params", id)
+  // navigate("/notes/new")
 
   useEffect(() => {
     checkLogin()
-    console.log("token vrai", token)
+    if (!token) return
+
     getOwnerNotes(token)
-  }, [token]) // ?? on what pages
+
+    if (id === "new") {
+      const createNewNote = async () => {
+        try {
+          const newNote = await postNote(token, "")
+          navigate(`/notes/${newNote.data._id}`)
+          console.log(currentNote) // null
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      createNewNote()
+    } else {
+      getNote(token, id)
+    }
+  }, [token, id])
+
+  useEffect(() => {
+    console.log("set note", note)
+  }, [note])
 
   const handleNoteSelect = (note) => {
     setCurrentNote(note)
-    setAIResponseText("")
+    console.log(currentNote) // NULL first, ok
   }
 
   const handleCreateNote = async (text) => {
@@ -36,17 +65,24 @@ function Journal() {
     }
   }
 
+  const handleCreateAIResponse = async (noteId) => {
+    try {
+      const response = await postAIResponse(token, noteId)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="flex justify-center h-screen box-border bg-blue-400">
       <History ownerNotes={ownerNotes} onNoteSelect={handleNoteSelect} />
       <div className="flex flex-col h-full overflow-hidden flex-1 max-w-3xl w-full mx-auto px-5 m-auto bg-white rounded text-sky-950 font-roboto">
         <CreateNote onCreateNote={handleCreateNote} />
-        {currentNote && (
-          <div>
-            <AIResponse noteId={currentNote._id} />
-          </div>
-        )}
+        <div>
+          <AIResponse onCreateAIResponse={handleCreateAIResponse} />
+        </div>
       </div>
+      s
     </div>
   )
 }

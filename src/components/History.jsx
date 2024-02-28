@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function History({ ownerNotes, onNoteSelect }) {
   return (
     <div className="text-black w-1/4">
@@ -5,7 +7,7 @@ function History({ ownerNotes, onNoteSelect }) {
       <ul>
         {ownerNotes.map((note) => (
           <li key={note._id} onClick={() => onNoteSelect(note)}>
-            {note.text}
+            <Link to={`/notes/${note._id}`}>{note.text}</Link>
           </li>
         ))}
       </ul>
