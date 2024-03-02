@@ -1,5 +1,6 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const AuthContext = createContext()
 
@@ -30,11 +31,19 @@ function AuthProviderWrapper(props) {
     }
   }
 
-  const checkLogin = () => {
+  const checkLogin = async () => {
     const storedToken = localStorage.getItem("authToken")
     console.log("token", storedToken)
     if (storedToken) {
       setToken(storedToken)
+
+      try {
+        const response = await axios.get(`${API_URL}/api/users/me`)
+        setUser(response.data.user)
+      } catch (error) {
+        console.error(error)
+        useNavigate("/login")
+      }
     }
   }
 
@@ -43,10 +52,10 @@ function AuthProviderWrapper(props) {
     console.log(email, password)
     axios
       .post(`${API_URL}/api/users`, { email: email, password: password })
-      .then(() => {
+      .then((response) => {
         console.log(response.data.token)
         setToken(response.data.token)
-        return "Signup OK"
+        return "signup ok"
       })
       .catch((err) => {
         console.log(err)
@@ -158,7 +167,7 @@ function AuthProviderWrapper(props) {
       )
       .then((response) => {
         setAIResponse(response.data.data.text)
-        console.log("created AI response", response.data.data.text)
+        console.log("Created AI response:", response.data.data.text)
       })
       .catch((err) => {
         console.log("Error fetching AI response:", err)
@@ -167,15 +176,13 @@ function AuthProviderWrapper(props) {
 
   // ?
 
-  const getOwnerNotes = (userToken) => {
-    if (!userToken) {
-      return
-    }
+  const getOwnerNotes = () => {
+    const token = localStorage.getItem("authToken")
     axios
 
       .get(`${API_URL}/api/notes/owner`, {
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {

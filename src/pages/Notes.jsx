@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
-import CreateNote from "../components/CreateNote"
+import Note from "../components/Note"
 import History from "../components/History"
 import AIResponse from "../components/AIResponse"
 import { useParams, useNavigate } from "react-router-dom"
+import Navbar from "../components/Navbar"
+import Button from "../components/Button"
+import { Link } from "react-router-dom"
 
-function Journal(props) {
+function Notes(props) {
   const {
     token,
     checkLogin,
@@ -15,21 +18,18 @@ function Journal(props) {
     getNote,
     note,
     postAIResponse,
-    aiResponseNew,
-    setNote,
   } = useContext(AuthContext)
 
   const [currentNote, setCurrentNote] = useState(null)
   const { id } = useParams()
   const navigate = useNavigate()
   console.log("params", id)
-  // navigate("/notes/new")
 
   useEffect(() => {
     checkLogin()
     if (!token) return
 
-    getOwnerNotes(token)
+    getOwnerNotes()
 
     if (id === "new") {
       const createNewNote = async () => {
@@ -53,13 +53,13 @@ function Journal(props) {
 
   const handleNoteSelect = (note) => {
     setCurrentNote(note)
-    console.log(currentNote) // NULL first, ok
+    console.log(currentNote)
   }
 
   const handleCreateNote = async (text) => {
     try {
       const response = await postNote(token, text)
-      getOwnerNotes(token)
+      getOwnerNotes()
     } catch (error) {
       console.log(error)
     }
@@ -74,17 +74,27 @@ function Journal(props) {
   }
 
   return (
-    <div className="flex justify-center h-screen box-border bg-blue-400">
-      <History ownerNotes={ownerNotes} onNoteSelect={handleNoteSelect} />
-      <div className="flex flex-col h-full overflow-hidden flex-1 max-w-3xl w-full mx-auto px-5 m-auto bg-white rounded text-sky-950 font-roboto">
-        <CreateNote onCreateNote={handleCreateNote} />
-        <div>
-          <AIResponse onCreateAIResponse={handleCreateAIResponse} />
+    <div className="flex flex-col h-screen box-border bg-blue-200 font-roboto">
+      <Navbar></Navbar>
+      <div className="flex flex-1 w-full h-full">
+        <div className="flex-1 px-10 overflow-hidden">
+          <Link to="/notes/new">
+            <Button text={"New"} />
+          </Link>
+          <History ownerNotes={ownerNotes} onNoteSelect={handleNoteSelect} />
         </div>
+        <div className="flex-1">
+          <div className="flex flex-col h-full max-w-3xl mx-auto px-5 bg-white rounded text-sky-950">
+            <Note onCreateNote={handleCreateNote} />
+            <div className="">
+              <AIResponse onCreateAIResponse={handleCreateAIResponse} />
+            </div>
+          </div>
+        </div>
+        <div className="w-52 flex-1" />
       </div>
-      s
     </div>
   )
 }
 
-export default Journal
+export default Notes

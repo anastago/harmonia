@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
+import Button from "./Button"
 
 function AIResponse({ onCreateAIResponse }) {
   const { getAIResponse, token, aiResponse, note } = useContext(AuthContext)
@@ -25,9 +26,9 @@ function AIResponse({ onCreateAIResponse }) {
 
   return (
     <div>
-      <div className="border h-14 text-black">
+      <div className=" h-14 text-black">
         <form onSubmit={handleAIResponse}>
-          <button type="submit">Get AI Response</button>
+          <Button type="submit" text={"AI feedback"}></Button>
         </form>
         {aiResponse}
       </div>

@@ -3,7 +3,7 @@ import { Routes, Route, useSearchParams } from "react-router-dom"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
 import Homepage from "./pages/Homepage"
-import Journal from "./pages/Journal"
+import Journal from "./pages/Notes"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 
