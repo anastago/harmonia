@@ -5,8 +5,8 @@ import History from "../components/History"
 import AIResponse from "../components/AIResponse"
 import { useParams, useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
-import Button from "../components/Button"
 import { Link } from "react-router-dom"
+import { PlusIcon } from "@heroicons/react/24/outline"
 
 function Notes(props) {
   const {
@@ -27,6 +27,7 @@ function Notes(props) {
 
   useEffect(() => {
     checkLogin()
+    console.log("token after sigunp", token) // null
     if (!token) return
 
     getOwnerNotes()
@@ -68,30 +69,30 @@ function Notes(props) {
   const handleCreateAIResponse = async (noteId) => {
     try {
       const response = await postAIResponse(token, noteId)
+      getOwnerNotes()
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <div className="flex flex-col h-screen box-border bg-blue-200 font-roboto">
+    <div className="flex flex-col h-screen box-border font-roboto overflow-y-auto">
       <Navbar></Navbar>
-      <div className="flex flex-1 w-full h-full">
-        <div className="flex-1 px-10 overflow-hidden">
-          <Link to="/notes/new">
-            <Button text={"New"} />
-          </Link>
-          <History ownerNotes={ownerNotes} onNoteSelect={handleNoteSelect} />
-        </div>
+      <div className="flex flex-1 w-full overflow-hidden">
+        <History ownerNotes={ownerNotes} onNoteSelect={handleNoteSelect} />
+
         <div className="flex-1">
-          <div className="flex flex-col h-full max-w-3xl mx-auto px-5 bg-white rounded text-sky-950">
+          <div className="flex flex-col h-full relative mx-auto px-5 bg-white rounded text-sky-950">
+            <Link to="/notes/new">
+              <PlusIcon className="absolute left-4 top-4 h-7 w-7 text-blue-800" />
+            </Link>
             <Note onCreateNote={handleCreateNote} />
             <div className="">
               <AIResponse onCreateAIResponse={handleCreateAIResponse} />
             </div>
           </div>
         </div>
-        <div className="w-52 flex-1" />
+        <div className="w-52" />
       </div>
     </div>
   )

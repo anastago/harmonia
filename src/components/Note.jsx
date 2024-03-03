@@ -3,8 +3,7 @@ import TextareaAutosize from "react-textarea-autosize"
 import { AuthContext } from "../context/auth.context"
 
 function Note({ onCreateNote }) {
-  const { getNote, note, noteUpdated, updateNote, token } =
-    useContext(AuthContext)
+  const { note, updateNote, token } = useContext(AuthContext)
 
   const [text, setText] = useState("")
 
@@ -12,8 +11,7 @@ function Note({ onCreateNote }) {
     if (note) {
       setText(note.text)
     }
-  }, [note]) // still need ?
-
+  }, [note])
   useEffect(() => {
     const debounce = setTimeout(async () => {
       try {
@@ -42,7 +40,7 @@ function Note({ onCreateNote }) {
         <div>
           <TextareaAutosize
             autoFocus
-            className="flex-1 px-6 min-h-64 mt-10 resize-none outline-none border-0 rounded bg-transparent text-sky-950 font-roboto"
+            className="flex-1 px-6 min-h-64 w-full mt-10 resize-none outline-none border-0 rounded bg-transparent text-sky-950 font-roboto"
             name="chat"
             type="text"
             value={text}

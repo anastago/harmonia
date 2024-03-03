@@ -11,6 +11,7 @@ function AuthProviderWrapper(props) {
   const [note, setNote] = useState([])
   const [ownerNotes, setOwnerNotes] = useState([])
   const [aiResponse, setAIResponse] = useState([])
+  const navigate = useNavigate()
   const API_URL = import.meta.env.VITE_API_URL
   console.log(API_URL)
 
@@ -38,34 +39,41 @@ function AuthProviderWrapper(props) {
       setToken(storedToken)
 
       try {
-        const response = await axios.get(`${API_URL}/api/users/me`)
+        const response = await axios.get(`${API_URL}/api/users/me`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        })
+        console.log(response.data.user)
         setUser(response.data.user)
       } catch (error) {
         console.error(error)
-        useNavigate("/login")
+        setToken("")
+        navigate("/login")
       }
+    } else navigate("/login")
+  }
+
+  const signup = async (event, email, password) => {
+    event.preventDefault()
+    try {
+      const response = await axios.post(`${API_URL}/api/users`, {
+        email,
+        password,
+      })
+      setToken(response.data.token)
+      localStorage.setItem("authToken", response.data.token)
+      console.log(response.data.token)
+      return "signup ok"
+    } catch (error) {
+      console.log(error)
+      return error
     }
   }
 
-  const signup = (event, email, password) => {
-    event.preventDefault()
-    console.log(email, password)
-    axios
-      .post(`${API_URL}/api/users`, { email: email, password: password })
-      .then((response) => {
-        console.log(response.data.token)
-        setToken(response.data.token)
-        return "signup ok"
-      })
-      .catch((err) => {
-        console.log(err)
-        return err
-      })
-  }
-
   const logout = (event) => {
-    event.preventDefault()
     setToken("")
+    setUser({})
     localStorage.removeItem("authToken")
   }
 
@@ -174,8 +182,6 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  // ?
-
   const getOwnerNotes = () => {
     const token = localStorage.getItem("authToken")
     axios
@@ -193,26 +199,6 @@ function AuthProviderWrapper(props) {
         console.log(error)
       })
   }
-
-  // const postNote = async (userToken, text) => {
-  //   axios
-  //     .post(
-  //       `${API_URL}/api/notes/`,
-  //       { text },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${userToken}`,
-  //         },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       console.log("id of a new note", response.data.data._id)
-  //       return response.data
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }
 
   const postNote = async (userToken, text) => {
     try {
