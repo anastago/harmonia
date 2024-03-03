@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import NavbarLoginPages from "../components/NavbarLoginPages"
 import { AuthContext } from "../context/auth.context"
-import ButtonMedium from "../components/ButtonMedium"
+import ButtonSecondary from "../components/ButtonSecondary"
 import { Link } from "react-router-dom"
 
 function Signup(props) {
@@ -39,17 +39,17 @@ function Signup(props) {
               <input
                 className="bg-blue-100"
                 value={email}
-                type="text"
+                type="email"
                 onChange={(event) => setEmail(event.target.value)}
               />
               <label>Create Password</label>
               <input
                 className="bg-blue-100"
                 value={password}
-                type="text"
+                type="password"
                 onChange={(event) => setPassword(event.target.value)}
               />
-              <ButtonMedium text={"Sign up"} />
+              <ButtonSecondary text={"Sign up"} />
               {error && <div className="text-red-500">{error}</div>}
             </form>
             <Link to="/login" className="underline text-xs">

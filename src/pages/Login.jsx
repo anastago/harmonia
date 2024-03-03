@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth.context"
 import { Link } from "react-router-dom"
 import React from "react"
 import NavbarLoginPages from "../components/NavbarLoginPages"
-import ButtonMedium from "../components/ButtonMedium"
+import ButtonSecondary from "../components/ButtonSecondary"
 
 function Login(props) {
   const { value, login, checkLogin } = useContext(AuthContext)
@@ -60,7 +60,7 @@ function Login(props) {
                 }}
               />
 
-              <ButtonMedium text={"Sign in"} />
+              <ButtonSecondary text={"Sign in"} />
               {error && <div className="text-red-500">{error}</div>}
             </form>
             <Link to="/signup" className="underline text-xs">

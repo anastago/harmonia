@@ -143,8 +143,8 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  const getAIResponse = (userToken, noteId) => {
-    axios
+  const getAIResponse = async (userToken, noteId) => {
+    await axios
       .get(`${API_URL}/api/airesponses/single`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -155,15 +155,14 @@ function AuthProviderWrapper(props) {
       })
       .then((response) => {
         setAIResponse(response.data.text)
-        console.log(response.data.text)
       })
       .catch((err) => {
         console.log("Error fetching AI response:", err)
       })
   }
 
-  const postAIResponse = (userToken, noteId) => {
-    axios
+  const postAIResponse = async (userToken, noteId) => {
+    await axios
       .post(
         `${API_URL}/api/airesponses/`,
         { noteId },

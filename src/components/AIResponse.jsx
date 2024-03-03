@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
-import ButtonMedium from "../components/ButtonMedium"
+import ButtonSecondary from "./ButtonSecondary"
+import { SparklesIcon } from "@heroicons/react/24/outline"
 
-function AIResponse({ onCreateAIResponse }) {
+function AIResponse({ onCreateAIResponse, isLoading }) {
   const { getAIResponse, token, aiResponse, note } = useContext(AuthContext)
 
   useEffect(() => {
@@ -21,17 +22,24 @@ function AIResponse({ onCreateAIResponse }) {
 
   const handleAIResponse = async (event) => {
     event.preventDefault()
+
     await onCreateAIResponse(note._id)
   }
 
   return (
-    <div>
-      <div className=" h-14 text-black">
-        <form onSubmit={handleAIResponse}>
-          <ButtonMedium type="submit" text={"AI feedback"}></ButtonMedium>
-        </form>
-        {aiResponse}
-      </div>
+    <div className="h-14">
+      <form onSubmit={handleAIResponse} className="my-4">
+        <ButtonSecondary
+          type="submit"
+          text={"Feedback"}
+          Icon={SparklesIcon}
+        ></ButtonSecondary>
+      </form>
+      {isLoading ? (
+        <div className="text-slate-500">Thinking...</div>
+      ) : (
+        aiResponse
+      )}
     </div>
   )
 }

@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>Harmonai</title>
+        <title>Harmonia</title>
       </Helmet>
       <div className="min-w-[320px]">
         <Routes>

@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-import ButtonMedium from "./ButtonMedium"
+import ButtonTertiary from "./ButtonTertiary"
 import { AuthContext } from "../context/auth.context"
 import { useNavigate } from "react-router-dom"
 
@@ -23,7 +23,7 @@ function Navbar() {
 
       {token ? (
         <form onSubmit={handleLogout}>
-          <ButtonMedium text={"Log out"}></ButtonMedium>{" "}
+          <ButtonTertiary text={"Log out"}></ButtonTertiary>{" "}
         </form>
       ) : (
         <Link

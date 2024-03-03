@@ -1,9 +1,13 @@
 import { Link, useParams } from "react-router-dom"
 
-function History({ ownerNotes, onNoteSelect }) {
+function History({ ownerNotes, onNoteSelect, isOpen }) {
   const { id } = useParams()
   return (
-    <div className="text-black overflow-auto h-full w-52 px-5">
+    <div
+      className={`text-black overflow-auto h-full w-52 px-5 fixed sm:static z-10 transition-transform bg-white sm:bg-transparent ${
+        isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
+      }`}
+    >
       <h1 className="text-xs text-blue-500 top-0 p-1">Previous</h1>
       <ul className="">
         {ownerNotes.map((note) => (

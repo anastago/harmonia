@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
 import Navbar from "../components/Navbar"
-import ButtonLarge from "../components/ButtonLarge"
+import ButtonPrimary from "../components/ButtonPrimary"
 
 function Homepage(props) {
   return (
@@ -16,7 +16,7 @@ function Homepage(props) {
             potential and navigate life's challenges with CBT-driven insights.
           </h2>
           <Link to="notes/new">
-            <ButtonLarge text={"Start journaling"}></ButtonLarge>
+            <ButtonPrimary text={"Start journaling"}></ButtonPrimary>
           </Link>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react"
 
-function ButtonMedium(props) {
+function ButtonTertiary(props) {
   return (
     <button
       type="submit"
@@ -11,4 +11,4 @@ function ButtonMedium(props) {
   )
 }
 
-export default ButtonMedium
+export default ButtonTertiary

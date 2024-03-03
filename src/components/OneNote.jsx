@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react"
 import TextareaAutosize from "react-textarea-autosize"
 import { AuthContext } from "../context/auth.context"
 
-function Note({ onCreateNote }) {
+function OneNote({ onCreateNote }) {
   const { note, updateNote, token } = useContext(AuthContext)
 
   const [text, setText] = useState("")
@@ -35,22 +35,20 @@ function Note({ onCreateNote }) {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <TextareaAutosize
-            autoFocus
-            className="flex-1 px-6 min-h-64 w-full mt-10 resize-none outline-none border-0 rounded bg-transparent text-sky-950 font-roboto"
-            name="chat"
-            type="text"
-            value={text}
-            onChange={handleInputChange}
-            placeholder="How are you feeling today?"
-          />
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="m-4">
+      <div>
+        <TextareaAutosize
+          autoFocus
+          className="flex-1 px-6 min-h-64 w-full mt-10 resize-none outline-none border-0 rounded bg-transparent text-sky-950 font-roboto"
+          name="chat"
+          type="text"
+          value={text}
+          onChange={handleInputChange}
+          placeholder="How are you feeling today?"
+        />
+      </div>
+    </form>
   )
 }
 
-export default Note
+export default OneNote

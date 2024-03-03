@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
-import Note from "../components/Note"
+import OneNote from "../components/OneNote"
 import History from "../components/History"
 import AIResponse from "../components/AIResponse"
 import { useParams, useNavigate } from "react-router-dom"
@@ -23,11 +23,13 @@ function Notes(props) {
   const [currentNote, setCurrentNote] = useState(null)
   const { id } = useParams()
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   console.log("params", id)
 
   useEffect(() => {
     checkLogin()
-    console.log("token after sigunp", token) // null
+    console.log("token after sigunp", token)
     if (!token) return
 
     getOwnerNotes()
@@ -37,7 +39,7 @@ function Notes(props) {
         try {
           const newNote = await postNote(token, "")
           navigate(`/notes/${newNote.data._id}`)
-          console.log(currentNote) // null
+          console.log(currentNote)
         } catch (error) {
           console.log(error)
         }
@@ -68,10 +70,14 @@ function Notes(props) {
 
   const handleCreateAIResponse = async (noteId) => {
     try {
-      const response = await postAIResponse(token, noteId)
+      setIsLoading(true)
+      console.log(isLoading)
+      await postAIResponse(token, noteId)
       getOwnerNotes()
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -79,20 +85,32 @@ function Notes(props) {
     <div className="flex flex-col h-screen box-border font-roboto overflow-y-auto">
       <Navbar></Navbar>
       <div className="flex flex-1 w-full overflow-hidden">
-        <History ownerNotes={ownerNotes} onNoteSelect={handleNoteSelect} />
+        <History
+          isOpen={isOpen}
+          ownerNotes={ownerNotes}
+          onNoteSelect={handleNoteSelect}
+        />
 
         <div className="flex-1">
-          <div className="flex flex-col h-full relative mx-auto px-5 bg-white rounded text-sky-950">
-            <Link to="/notes/new">
-              <PlusIcon className="absolute left-4 top-4 h-7 w-7 text-blue-800" />
+          <div className="flex flex-col h-full relative mx-auto px-5 bg-white sm:rounded text-sky-950">
+            <Link
+              to="/notes/new"
+              className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute left-4 top-4"
+            >
+              <PlusIcon className="h-7 w-7 text-blue-800" />
             </Link>
-            <Note onCreateNote={handleCreateNote} />
-            <div className="">
-              <AIResponse onCreateAIResponse={handleCreateAIResponse} />
-            </div>
+            <button
+              className="sm:hidden w-12 h-12 flex justify-center items-center rounded-full bg-blue-300 fixed bottom-4 right-4"
+              onClick={() => setIsOpen(!isOpen)}
+            ></button>
+            <OneNote onCreateNote={handleCreateNote} />
+            <AIResponse
+              onCreateAIResponse={handleCreateAIResponse}
+              isLoading={isLoading}
+            />
           </div>
         </div>
-        <div className="w-52" />
+        <div className="w-52 hidden sm:block" />
       </div>
     </div>
   )
