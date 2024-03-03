@@ -9,7 +9,9 @@ import Signup from "./pages/Signup"
 
 function App() {
   useEffect(() => {
-    document.body.classList.add("bg-blue-50")
+    document.body.classList.add("bg-gradient-to-b")
+    document.body.classList.add("from-blue-100")
+    document.body.classList.add("to-blue-300")
     document.body.classList.add("box-border")
   }, [])
   return (
