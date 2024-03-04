@@ -77,8 +77,8 @@ function AuthProviderWrapper(props) {
     localStorage.removeItem("authToken")
   }
 
-  const getUser = (userToken) => {
-    axios
+  const getUser = async (userToken) => {
+    await axios
       .get(`${API_URL}/api/users/single`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -92,8 +92,8 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  const getNotes = (userToken) => {
-    axios
+  const getNotes = async (userToken) => {
+    await axios
       .get(`${API_URL}/api/notes`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -107,8 +107,8 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  const getNote = (userToken, id) => {
-    axios
+  const getNote = async (userToken, id) => {
+    await axios
       .get(`${API_URL}/api/notes/${id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -123,8 +123,8 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  const updateNote = (userToken, id, newText) => {
-    axios
+  const updateNote = async (userToken, id, newText) => {
+    await axios
       .put(
         `${API_URL}/api/notes/${id}`,
         { text: newText },
@@ -181,9 +181,9 @@ function AuthProviderWrapper(props) {
       })
   }
 
-  const getOwnerNotes = () => {
+  const getOwnerNotes = async () => {
     const token = localStorage.getItem("authToken")
-    axios
+    await axios
 
       .get(`${API_URL}/api/notes/owner`, {
         headers: {

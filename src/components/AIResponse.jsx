@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useEffect, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
 import ButtonSecondary from "./ButtonSecondary"
 import { SparklesIcon } from "@heroicons/react/24/outline"
@@ -27,19 +27,21 @@ function AIResponse({ onCreateAIResponse, isLoading }) {
   }
 
   return (
-    <div className="h-14">
-      <form onSubmit={handleAIResponse} className="my-4">
+    <div className="flex-1 flex flex-col overflow-y-auto">
+      <form onSubmit={handleAIResponse} className="my-5 h-12">
         <ButtonSecondary
           type="submit"
           text={"Feedback"}
           Icon={SparklesIcon}
         ></ButtonSecondary>
       </form>
-      {isLoading ? (
-        <div className="text-slate-500">Thinking...</div>
-      ) : (
-        aiResponse
-      )}
+      <div className="flex-1 overflow-y-auto mb-2">
+        {isLoading ? (
+          <div className="text-slate-500">Thinking...</div>
+        ) : (
+          aiResponse
+        )}
+      </div>
     </div>
   )
 }

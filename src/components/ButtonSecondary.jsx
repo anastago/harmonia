@@ -5,7 +5,7 @@ function ButtonSecondary(props) {
   return (
     <button
       type="submit"
-      className=" text-blue-800 w-36 h-12 bg-blue-50 hover:bg-blue-100 rounded-full p-3 text-center drop-shadow-lg flex items-center justify-center"
+      className="sm:m-0 mx-auto text-blue-800 w-36 h-12 bg-blue-50 hover:bg-blue-100 rounded-full p-3 text-center drop-shadow-lg flex items-center justify-center"
     >
       {Icon && <Icon className="w-5 h-5 mr-2" />} {props.text}
     </button>

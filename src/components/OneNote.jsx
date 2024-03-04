@@ -35,11 +35,11 @@ function OneNote({ onCreateNote }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="m-4">
+    <form onSubmit={handleSubmit}>
       <div>
         <TextareaAutosize
           autoFocus
-          className="flex-1 px-6 min-h-64 w-full mt-10 resize-none outline-none border-0 rounded bg-transparent text-sky-950 font-roboto"
+          className="min-h-56 max-h-56 w-full mt-16 resize-none outline-none rounded bg-transparent text-sky-950 font-roboto overflow-y-auto"
           name="chat"
           type="text"
           value={text}

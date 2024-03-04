@@ -6,7 +6,7 @@ import AIResponse from "../components/AIResponse"
 import { useParams, useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import { Link } from "react-router-dom"
-import { PlusIcon } from "@heroicons/react/24/outline"
+import { PlusIcon, Bars2Icon, XMarkIcon } from "@heroicons/react/24/outline"
 
 function Notes(props) {
   const {
@@ -92,17 +92,29 @@ function Notes(props) {
         />
 
         <div className="flex-1">
-          <div className="flex flex-col h-full relative mx-auto px-5 bg-white sm:rounded text-sky-950">
-            <Link
-              to="/notes/new"
-              className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute left-4 top-4"
-            >
-              <PlusIcon className="h-7 w-7 text-blue-800" />
-            </Link>
+          <div className="flex flex-col h-full max-h-full relative mx-auto px-5 bg-white sm:rounded text-sky-950">
+            {isOpen ? (
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-4 top-4 right-4"
+              >
+                {" "}
+                <XMarkIcon className="h-7 w-7 text-blue-800" />
+              </button>
+            ) : (
+              <Link
+                to="/notes/new"
+                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-4 top-4 right-4"
+              >
+                <PlusIcon className="h-7 w-7 text-blue-800" />
+              </Link>
+            )}
             <button
-              className="sm:hidden w-12 h-12 flex justify-center items-center rounded-full bg-blue-300 fixed bottom-4 right-4"
+              className="sm:hidden w-10 h-10 flex justify-center items-center rounded-full hover:bg-blue-100 absolute left-4 top-4"
               onClick={() => setIsOpen(!isOpen)}
-            ></button>
+            >
+              <Bars2Icon className="h-7 w-7 text-blue-800" />
+            </button>
             <OneNote onCreateNote={handleCreateNote} />
             <AIResponse
               onCreateAIResponse={handleCreateAIResponse}

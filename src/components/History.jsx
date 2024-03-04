@@ -4,7 +4,7 @@ function History({ ownerNotes, onNoteSelect, isOpen }) {
   const { id } = useParams()
   return (
     <div
-      className={`text-black overflow-auto h-full w-52 px-5 fixed sm:static z-10 transition-transform bg-white sm:bg-transparent ${
+      className={`text-black bg-blue-50 overflow-auto h-full sm:w-52 w-4/5 px-5 fixed sm:static z-10 transition-transform sm:bg-transparent ${
         isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
       }`}
     >
