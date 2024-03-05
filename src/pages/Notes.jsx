@@ -29,7 +29,7 @@ function Notes(props) {
 
   useEffect(() => {
     checkLogin()
-    console.log("token after sigunp", token)
+
     if (!token) return
 
     getOwnerNotes()
@@ -39,7 +39,6 @@ function Notes(props) {
         try {
           const newNote = await postNote(token, "")
           navigate(`/notes/${newNote.data._id}`)
-          console.log(currentNote)
         } catch (error) {
           console.log(error)
         }
@@ -50,13 +49,10 @@ function Notes(props) {
     }
   }, [token, id])
 
-  useEffect(() => {
-    console.log("set note", note)
-  }, [note])
+  useEffect(() => {}, [note])
 
   const handleNoteSelect = (note) => {
     setCurrentNote(note)
-    console.log(currentNote)
   }
 
   const handleCreateNote = async (text) => {
@@ -71,7 +67,6 @@ function Notes(props) {
   const handleCreateAIResponse = async (noteId) => {
     try {
       setIsLoading(true)
-      console.log(isLoading)
       await postAIResponse(token, noteId)
       getOwnerNotes()
     } catch (error) {
@@ -82,7 +77,7 @@ function Notes(props) {
   }
 
   return (
-    <div className="flex flex-col h-screen box-border font-roboto overflow-y-auto">
+    <div className="flex flex-col h-screen box-border font-roboto">
       <Navbar></Navbar>
       <div className="flex flex-1 w-full overflow-hidden">
         <History
@@ -90,7 +85,6 @@ function Notes(props) {
           ownerNotes={ownerNotes}
           onNoteSelect={handleNoteSelect}
         />
-
         <div className="flex-1">
           <div className="flex flex-col h-full max-h-full relative mx-auto px-5 bg-white sm:rounded text-sky-950">
             {isOpen ? (

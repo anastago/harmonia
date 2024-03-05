@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Routes, Route, useSearchParams } from "react-router-dom"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
@@ -11,7 +10,7 @@ function App() {
   useEffect(() => {
     document.body.classList.add("bg-gradient-to-b")
     document.body.classList.add("from-blue-100")
-    document.body.classList.add("to-blue-300")
+    document.body.classList.add("to-blue-400")
     document.body.classList.add("box-border")
   }, [])
   return (

@@ -26,13 +26,13 @@ function Signup(props) {
   }
 
   return (
-    <div className="flex flex-col h-screen box-border bg-blue-200 font-roboto">
+    <div className="flex flex-col h-screen box-border font-roboto">
       <NavbarLoginPages />
       <div className="flex flex-1 w-full h-full">
         <div className="flex-1 w-52">
-          <div className="flex flex-col items-center space-y-10 h-full max-w-3xl mx-auto px-5 bg-white rounded text-sky-950 font-roboto">
+          <div className="flex flex-col items-center space-y-7 h-full max-w-3xl mx-auto pb-7 px-5 bg-white rounded text-sky-950 font-roboto">
             <form
-              className="flex flex-col w-full items-center space-y-6 mt-10"
+              className="flex flex-col w-full items-center space-y-7 mt-10"
               onSubmit={handleSubmit}
             >
               <label>Email address</label>
@@ -50,7 +50,9 @@ function Signup(props) {
                 onChange={(event) => setPassword(event.target.value)}
               />
               <ButtonSecondary text={"Sign up"} />
-              {error && <div className="text-red-500">{error}</div>}
+              {error && (
+                <div className="text-red-500 mx-auto text-center">{error}</div>
+              )}
             </form>
             <Link to="/login" className="underline text-xs">
               Already have an account? Sign in

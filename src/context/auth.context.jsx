@@ -13,7 +13,6 @@ function AuthProviderWrapper(props) {
   const [aiResponse, setAIResponse] = useState([])
   const navigate = useNavigate()
   const API_URL = import.meta.env.VITE_API_URL
-  console.log(API_URL)
 
   const login = async (event, email, password) => {
     event.preventDefault()
@@ -34,7 +33,6 @@ function AuthProviderWrapper(props) {
 
   const checkLogin = async () => {
     const storedToken = localStorage.getItem("authToken")
-    console.log("token", storedToken)
     if (storedToken) {
       setToken(storedToken)
 
@@ -63,7 +61,6 @@ function AuthProviderWrapper(props) {
       })
       setToken(response.data.token)
       localStorage.setItem("authToken", response.data.token)
-      console.log(response.data.token)
       return "signup ok"
     } catch (error) {
       console.log(error)
@@ -135,7 +132,6 @@ function AuthProviderWrapper(props) {
         }
       )
       .then((response) => {
-        console.log(response)
         setNote(response.data.data)
       })
       .catch((err) => {
@@ -145,7 +141,7 @@ function AuthProviderWrapper(props) {
 
   const getAIResponse = async (userToken, noteId) => {
     await axios
-      .get(`${API_URL}/api/airesponses/single`, {
+      .get(`${API_URL}/api/airesponses/`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -154,7 +150,8 @@ function AuthProviderWrapper(props) {
         },
       })
       .then((response) => {
-        setAIResponse(response.data.text)
+        setAIResponse(response.data.aiResponse[0].text)
+        console.log("resp", response.data.aiResponse[0].text)
       })
       .catch((err) => {
         console.log("Error fetching AI response:", err)
@@ -174,7 +171,6 @@ function AuthProviderWrapper(props) {
       )
       .then((response) => {
         setAIResponse(response.data.data.text)
-        console.log("Created AI response:", response.data.data.text)
       })
       .catch((err) => {
         console.log("Error fetching AI response:", err)
@@ -191,7 +187,6 @@ function AuthProviderWrapper(props) {
         },
       })
       .then((response) => {
-        console.log(response.data)
         setOwnerNotes(response.data.notes)
       })
       .catch((error) => {
@@ -210,6 +205,7 @@ function AuthProviderWrapper(props) {
           },
         }
       )
+      setAIResponse([])
       console.log("id of a new note", response.data.data._id)
       return response.data
     } catch (error) {
@@ -239,6 +235,7 @@ function AuthProviderWrapper(props) {
         note,
         aiResponse,
         postAIResponse,
+        setAIResponse,
         updateNote,
       }}
     >
