@@ -12,7 +12,7 @@ function Homepage(props) {
           <h1 className="text-6xl py-3">Safe space for your emotions</h1>
 
           <h2 className="text-sky-950 my-8 text-lg">
-            HarmonIA is your personal AI-Powered CBT Journal. Unlock your
+            Harmonia is your personal AI-Powered CBT Journal. Unlock your
             potential and navigate life's challenges with CBT-driven insights.
           </h2>
           <Link to="notes/new">

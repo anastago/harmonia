@@ -214,6 +214,23 @@ function AuthProviderWrapper(props) {
     }
   }
 
+  const deleteNote = async (userToken, id) => {
+    console.log("notetodeleteid", id)
+    await axios
+      .delete(`${API_URL}/api/notes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => {
+        console.log("response de delete:", response)
+        getOwnerNotes()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -237,6 +254,7 @@ function AuthProviderWrapper(props) {
         postAIResponse,
         setAIResponse,
         updateNote,
+        deleteNote,
       }}
     >
       {props.children}

@@ -1,10 +1,11 @@
-import { Routes, Route, useSearchParams } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import { useEffect } from "react"
 import { Helmet } from "react-helmet"
 import Homepage from "./pages/Homepage"
-import Journal from "./pages/Notes"
+import Notes from "./pages/Notes"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import PageNotFound from "./pages/PageNotFound"
 
 function App() {
   useEffect(() => {
@@ -21,9 +22,10 @@ function App() {
       <div className="min-w-[320px]">
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/notes/:id" element={<Journal />} />
+          <Route path="/notes/:id" element={<Notes />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
     </>
