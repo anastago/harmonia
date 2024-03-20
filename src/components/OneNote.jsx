@@ -19,7 +19,7 @@ function OneNote({ onCreateNote }) {
       } catch (error) {
         console.log(error)
       }
-    }, 300)
+    }, 500)
 
     return () => clearTimeout(debounce)
   }, [text, token])
