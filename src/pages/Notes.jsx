@@ -98,7 +98,7 @@ function Notes(props) {
             ) : (
               <Link
                 to="/notes/new"
-                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-6 top-6 right-4"
+                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-4 top-6 right-4"
               >
                 <PlusIcon className="h-7 w-7 text-blue-800" />
               </Link>
