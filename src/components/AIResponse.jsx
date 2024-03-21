@@ -31,7 +31,7 @@ function AIResponse({ onCreateAIResponse, isLoading }) {
       <form onSubmit={handleAIResponse} className="my-8 h-12 ml-1">
         <ButtonSecondary type="submit" text={"Get feedback"}></ButtonSecondary>
       </form>
-      <div className="flex-1 overflow-y-auto mb-2 ml-1">
+      <div className="flex-1 overflow-y-auto mb-7 ml-1">
         {isLoading ? (
           <div className="text-slate-500">Thinking...</div>
         ) : (
