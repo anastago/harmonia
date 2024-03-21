@@ -28,14 +28,10 @@ function AIResponse({ onCreateAIResponse, isLoading }) {
 
   return (
     <div className="flex-1 flex flex-col overflow-y-auto">
-      <form onSubmit={handleAIResponse} className="my-5 h-12">
-        <ButtonSecondary
-          type="submit"
-          text={"Feedback"}
-          Icon={SparklesIcon}
-        ></ButtonSecondary>
+      <form onSubmit={handleAIResponse} className="my-8 h-12 ml-1">
+        <ButtonSecondary type="submit" text={"Get feedback"}></ButtonSecondary>
       </form>
-      <div className="flex-1 overflow-y-auto mb-2">
+      <div className="flex-1 overflow-y-auto mb-2 ml-1">
         {isLoading ? (
           <div className="text-slate-500">Thinking...</div>
         ) : (

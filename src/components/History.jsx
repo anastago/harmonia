@@ -20,7 +20,7 @@ function History({ ownerNotes, onNoteSelect, isOpen }) {
 
   return (
     <div
-      className={`text-black bg-blue-50 overflow-auto h-full sm:w-52 w-4/5 px-5 fixed sm:static z-10 transition-transform sm:bg-transparent ${
+      className={`text-black bg-blue-50 overflow-auto h-full xl:w-72 md:w-48 lg:w-64 sm:w-44 w-4/5 px-5 fixed sm:static z-10 transition-transform sm:bg-transparent ${
         isOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"
       }`}
     >
@@ -36,7 +36,7 @@ function History({ ownerNotes, onNoteSelect, isOpen }) {
               onMouseEnter={() => setHoveredNoteId(note._id)}
               onMouseLeave={() => setHoveredNoteId(null)}
             >
-              <div className="sm:w-44 truncate">
+              <div className="sm:w-44 lg:w-64 truncate">
                 {note.text === "" ? "New" : note.text}
               </div>
               {hoveredNoteId === note._id && (

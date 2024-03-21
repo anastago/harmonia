@@ -86,11 +86,11 @@ function Notes(props) {
           onNoteSelect={handleNoteSelect}
         />
         <div className="flex-1">
-          <div className="flex flex-col h-full max-h-full relative mx-auto px-5 bg-white sm:rounded text-sky-950">
+          <div className="flex flex-col h-full max-h-full relative mx-auto px-5 bg-white xl:rounded text-sky-950">
             {isOpen ? (
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-4 top-4 right-4"
+                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-4 top-6 right-4"
               >
                 {" "}
                 <XMarkIcon className="h-7 w-7 text-blue-800" />
@@ -98,7 +98,7 @@ function Notes(props) {
             ) : (
               <Link
                 to="/notes/new"
-                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-4 top-4 right-4"
+                className="h-10 w-10 hover:bg-blue-100 rounded-full flex items-center justify-center absolute sm:left-6 top-6 right-4"
               >
                 <PlusIcon className="h-7 w-7 text-blue-800" />
               </Link>
@@ -116,7 +116,7 @@ function Notes(props) {
             />
           </div>
         </div>
-        <div className="w-52 hidden sm:block" />
+        <div className="xl:w-72 hidden md:block" />
       </div>
     </div>
   )

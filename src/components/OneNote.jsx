@@ -35,18 +35,16 @@ function OneNote({ onCreateNote }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <TextareaAutosize
-          autoFocus
-          className="min-h-56 max-h-56 w-full mt-16 resize-none outline-none rounded bg-transparent text-sky-950 font-roboto overflow-y-auto"
-          name="chat"
-          type="text"
-          value={text}
-          onChange={handleInputChange}
-          placeholder="How are you feeling today?"
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="min-w-full">
+      <TextareaAutosize
+        autoFocus
+        className="min-h-56 max-h-56 w-full ml-1 mt-20 resize-none outline-none rounded bg-transparent text-sky-950 font-roboto overflow-y-auto"
+        name="chat"
+        type="text"
+        value={text}
+        onChange={handleInputChange}
+        placeholder="How are you feeling today?"
+      />
     </form>
   )
 }
