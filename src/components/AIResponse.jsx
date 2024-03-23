@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react"
 import { AuthContext } from "../context/auth.context"
 import ButtonSecondary from "./ButtonSecondary"
-import { SparklesIcon } from "@heroicons/react/24/outline"
 
 function AIResponse({ onCreateAIResponse, isLoading }) {
   const { getAIResponse, token, aiResponse, note } = useContext(AuthContext)

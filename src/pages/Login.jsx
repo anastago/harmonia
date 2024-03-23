@@ -8,7 +8,7 @@ import NavbarLoginPages from "../components/NavbarLoginPages"
 import ButtonSecondary from "../components/ButtonSecondary"
 
 function Login(props) {
-  const { value, login, checkLogin } = useContext(AuthContext)
+  const { login, checkLogin } = useContext(AuthContext)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
